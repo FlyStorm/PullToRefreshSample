@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ public class RefreshListViewActivity extends Activity {
     private String mMoreUrl;
 
     private MyOnRefreshListener mMyOnRefreshListener;
+    private MyOnItemClickListener mMyOnItemClickListener;
 
 
     @Override
@@ -43,6 +45,18 @@ public class RefreshListViewActivity extends Activity {
         mListView.setOnRefreshListener(mMyOnRefreshListener);
 
         mListView.setAdapter(mMyListViewAdapter);
+
+        mMyOnItemClickListener=new MyOnItemClickListener();
+        //设置listview条目点击事件
+        mListView.setOnItemClickListener(mMyOnItemClickListener);
+    }
+
+    class MyOnItemClickListener implements AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Toast.makeText(RefreshListViewActivity.this,"当前点击："+arr[position],Toast.LENGTH_SHORT).show();
+        }
     }
 
     class MyListViewAdapter extends BaseAdapter {
